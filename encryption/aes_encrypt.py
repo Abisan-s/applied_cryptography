@@ -73,8 +73,30 @@ def decrypt_file(in_path: Path, out_path: Path, password: str) -> None:
      offset += 1
 
      if version != VERSION:
-          raise ValueError(f"Unsupported version: ")
+          raise ValueError(f"Unsupported version: {version}. Expected {VERSION}")
+     
+     (iterations,) = struct.unpack_from(">I", blob, offset)
+     offset += 4 
 
+     (salt_len,) = struct.unpack_from("B", blob, offset)
+     offset += 1
+
+     (nonce_len,) = struct.unpack_from("B", blob, offset)
+     offset += 1
+
+     salt = blob[offset: offset + salt_len]
+     offset += salt_len
+
+     nonce = blob[offset: offset + nonce_len]
+     offset += nonce_len
+
+     ciphertext = blob[offset:]
+     key = derive_key(password=password, salt=salt, iterations=iterations)
+     aesgcm = AESGCM(key)
+     associated_data = None
+     
+     plaintext = aesgcm.decrypt(nonce=nonce, data=ciphertext, associated_data=associated_data)
+     out_path.write_bytes(plaintext)
      
 
 
