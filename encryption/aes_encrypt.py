@@ -17,12 +17,12 @@ KEY_LEN = 32
 
 def derive_key (password: str, salt: bytes, iterations: int) -> bytes:
      """
-    Avleder en symmetrisk nøkkel fra et passord ved hjelp av PBKDF2-HMAC-SHA256.
-
-    password: passordet brukeren skriver inn (tekst)
-    salt: tilfeldig salt (bytes)
-    iterations: antall iterasjoner i PBKDF2 (int)
-    return: 32 bytes nøkkel (for AES-256)
+    Derieves a symmetric key from a password with the help of PBKDF2-HMAC-SHA256.
+    
+    password: the password which the user chooses (input)
+    salt: random salt (bytes)
+    iterations: number of iterations in PBKDF2 (int)
+    return: 32 bytes key (for AES-256)
     """
      password_bytes = password.encode("utf-8")
 
