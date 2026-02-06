@@ -43,7 +43,7 @@ def encrypt_file(in_path: Path, out_path: Path, password: str) -> None:
      salt = os.urandom(SALT_LEN)
      nonce = os.urandom(NONCE_LEN)
      
-     key = derive_key(passwords=password, salt=salt, iterations=PBKDF2_ITERATIONS)
+     key = derive_key(password=password, salt=salt, iterations=PBKDF2_ITERATIONS)
 
      aesgcm = AESGCM(key)
      associated_data = None 
@@ -59,6 +59,8 @@ def encrypt_file(in_path: Path, out_path: Path, password: str) -> None:
         salt,                               
         nonce                               
     ])
+     out_path.write_bytes(header + ciphertext)
+
      
 def decrypt_file(in_path: Path, out_path: Path, password: str) -> None:
      
