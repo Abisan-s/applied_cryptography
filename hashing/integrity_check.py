@@ -1,4 +1,4 @@
-# SHA-256 hashing + file verifying 
+# integrity_check. SHA-256 hashing + file verifying 
 
 import hashlib
 from pathlib import Path

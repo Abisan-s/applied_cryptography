@@ -1,3 +1,5 @@
+#aes_encrypt
+
 import os
 import getpass 
 import argparse
@@ -39,9 +41,9 @@ def derive_key (password: str, salt: bytes, iterations: int) -> bytes:
 def encrypt_file(in_path: Path, out_path: Path, password: str) -> None:
      plaintext = in_path.read_bytes()
      salt = os.urandom(SALT_LEN)
-     nonce = os.random(NONCE_LEN)
+     nonce = os.urandom(NONCE_LEN)
      
-     key = derive_key(passwords = password, salt = salt, iterations = PBKDF2_ITERATIONS)
+     key = derive_key(passwords=password, salt=salt, iterations=PBKDF2_ITERATIONS)
 
      aesgcm = AESGCM(key)
      associated_data = None 
@@ -134,6 +136,7 @@ def main() -> None:
     elif args.command == "decrypt":
         decrypt_file(in_path=in_path, out_path=out_path, password=password)
         print(f"Decrypted: {in_path} -> {out_path}")
+
 
 if __name__ == "__main__":
     main()

@@ -1,4 +1,4 @@
-# A simple password vault that saves entries (crypted) in a file
+# vault_py. A simple password vault that saves entries (crypted) in a file
 # Crypting: AES-GCM, key from password via PBKDF2-HMAC-SHA256.
 
 import json
